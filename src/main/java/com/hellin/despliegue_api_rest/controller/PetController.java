@@ -2,6 +2,7 @@ package com.hellin.despliegue_api_rest.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.hellin.despliegue_api_rest.repository.PetRepository;
@@ -39,6 +40,8 @@ public class PetController {
 
         return petRepository.findAll();
 =======
+=======
+>>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -47,6 +50,9 @@ public class PetController {
     @GetMapping
     public String hello(){
         return "Hello World";
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     }
 }
