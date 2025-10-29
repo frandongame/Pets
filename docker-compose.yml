@@ -1,35 +1,54 @@
 version: "3.9"
 
 services:
-  web:
-    build: .
+  # Backend Spring Boot
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/pets
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=mysecretpassword
+    depends_on:
+      - db
+
+  # Frontend PHP
+  frontend:
+    image: php:8.2-apache
     ports:
       - "8084:80"
     volumes:
-      - .:/var/www/html
+      - ./frontend:/var/www/html
     depends_on:
-      - db
+      - backend
 
+  # PostgreSQL Database
   db:
-    image: mysql:8.0
+    image: postgres:16
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: productos
-      MYSQL_USER: usuario_app
-      MYSQL_PASSWORD: clave_app
+      - POSTGRES_DB=pets
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - ./sql:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    ports:
-      - "8085:80"
+  # pgAdmin
+  pgadmin:
+    image: dpage/pgadmin4
     environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
     depends_on:
       - db
+
+volumes:
+  postgres_data:

@@ -1,58 +1,24 @@
 package com.hellin.despliegue_api_rest.controller;
 
+import com.hellin.despliegue_api_rest.entity.Pet;
+import com.hellin.despliegue_api_rest.repository.PetRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.hellin.despliegue_api_rest.repository.PetRepository;
-import com.hellin.despliegue_api_rest.entity.Pet;
 import java.util.List;
 
 @RestController
 @RequestMapping("/pet")
-/**
- * En este controlador se exponen los endpoints relacionados con pets{@link Pet}
- * @version 1.0
- * @author Fran
- */
+@CrossOrigin(origins = "*")
 public class PetController {
 
+    @Autowired
     private PetRepository petRepository;
 
-    /**
-     * Constructor del controlador de pets
-     * @param petRepository repositorio para consultar en pets
-     */
-
-    public PetController(PetRepository petRepository) {
-        this.petRepository = petRepository;
-    }
-
-    /**
-     * Este metodo devuelve una lista de pets
-     * @return {@code List<Pet>} informacion de pets
-     */
-
     @GetMapping("/List")
-    public List<Pet> hello() {
-
-
+    public List<Pet> getAllPets() {
         return petRepository.findAll();
-=======
-=======
->>>>>>> Stashed changes
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class PetController {
-
-    @GetMapping
-    public String hello(){
-        return "Hello World";
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     }
 }
